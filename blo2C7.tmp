@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cybckxd78by76"]
+
+[ext_resource type="Script" path="res://BlockChain.gd" id="1_45apk"]
+[ext_resource type="PackedScene" uid="uid://b3duf73vxqtlg" path="res://lone_node.tscn" id="2_f58in"]
+
+[node name="BlockChain" type="Node2D"]
+script = ExtResource("1_45apk")
+basicNode = ExtResource("2_f58in")

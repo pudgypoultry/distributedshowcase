@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=3 uid="uid://c05l6i2y1lunn"]
+
+[ext_resource type="PackedScene" uid="uid://cybckxd78by76" path="res://block_chain.tscn" id="1_7qay6"]
+[ext_resource type="Script" path="res://cam.gd" id="2_jtl8r"]
+
+[node name="MainScene" type="Node2D"]
+
+[node name="BlockChain" parent="." instance=ExtResource("1_7qay6")]
+position = Vector2(592, 334)
+initialAmount = 200
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(577, 324)
+script = ExtResource("2_jtl8r")
+min_zoom = 0.1
+max_zoom = 5.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="AddNode" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "Add Node"
+
+[node name="Transaction" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "Start Transaction"
+
+[node name="Validation" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "Start Validation"
+
+[node name="CheckEquality" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "Check Equality"
+
+[node name="ResetState" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "Reset State"
+
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/AddNode" to="BlockChain" method="AddNodeToSystem"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Transaction" to="BlockChain" method="StartTransaction"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Validation" to="BlockChain" method="StartValidation"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/CheckEquality" to="BlockChain" method="CheckEquality"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/ResetState" to="BlockChain" method="PrepareChainForNextStep"]
