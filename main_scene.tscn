@@ -12,6 +12,7 @@ initialAmount = 200
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(577, 324)
 script = ExtResource("2_jtl8r")
+zoom_speed = 0.01
 min_zoom = 0.1
 max_zoom = 5.0
 
@@ -46,7 +47,7 @@ text = "Check Equality"
 
 [node name="ResetState" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
-text = "Reset State"
+text = "Reset Visual"
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/AddNode" to="BlockChain" method="AddNodeToSystem"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Transaction" to="BlockChain" method="StartTransaction"]

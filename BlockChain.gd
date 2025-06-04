@@ -13,6 +13,7 @@ var currentSpawnPosition : Vector2 = Vector2(0, 0)
 var spawnDifference : float = 0.01
 var currentTransactors : Array[BasicNode] = []
 var numHops : int = 10
+var simulating = true
 
 
 """================================
@@ -24,6 +25,8 @@ func _ready() -> void:
 		AddNodeToSystem()
 		await get_tree().create_timer(spawnDifference).timeout
 	numHops = 10 + floori(sqrt(len(nodeList)))
+	await get_tree().create_timer(1).timeout
+	RunSimulation()
 
 func NumberSpiral(x, y):
 	#print("Input: ", "(", str(x), ",", str(y), ")")
@@ -146,6 +149,17 @@ func CheckEquality():
 
 func UniqueValidatorBehavior(validator : BasicNode):
 	pass
+
+
+func RunSimulation():
+	while(simulating):
+		for i in range(randi_range(1,ceili(sqrt(len(nodeList))))):
+			StartTransaction()
+			await get_tree().create_timer(1).timeout
+		StartValidation()
+		await get_tree().create_timer(1).timeout
+		PrepareChainForNextStep()
+		await get_tree().create_timer(0.3).timeout
 
 
 # Simple simulation is uniform random selection from list of nodes that aren't transacting

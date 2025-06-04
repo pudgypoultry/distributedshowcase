@@ -21,6 +21,7 @@ var originalLineColor : Color = Color(0, 0, 0)
 var hasValidated = false
 var isValidator = false
 var powerRanking = 1
+var showLabel = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -29,7 +30,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	nodeLabel.text = "Name: " + nodeName + "\nWallet: " + str(snappedf(currentWallet, 0.01))
+	if showLabel:
+		nodeLabel.text = "Name: " + nodeName + "\nWallet: " + str(snappedf(currentWallet, 0.01))
 
 """================================
 Debug, Setup, and Utility
