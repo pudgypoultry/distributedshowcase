@@ -10,6 +10,7 @@
 position = Vector2(592, 334)
 script = ExtResource("2_eyahd")
 rewardAmount = 1.0
+GPUCost = 1.0
 initialAmount = 50
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -31,6 +32,14 @@ offset_top = -171.0
 grow_horizontal = 0
 grow_vertical = 0
 
+[node name="Start" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "Start"
+
+[node name="Pause" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "Pause"
+
 [node name="AddNode" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 text = "Add Node"
@@ -51,8 +60,28 @@ text = "Check Equality"
 layout_mode = 2
 text = "Reset State"
 
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -55.0
+offset_bottom = 66.0
+grow_horizontal = 0
+
+[node name="ShowWallets" type="Button" parent="CanvasLayer/VBoxContainer2"]
+layout_mode = 2
+text = "Show Wallets"
+
+[node name="ShowLikelihoods" type="Button" parent="CanvasLayer/VBoxContainer2"]
+layout_mode = 2
+text = "Show Likelihoods"
+
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Start" to="BlockChain" method="RunSimulation"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Pause" to="BlockChain" method="PauseSimulation"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/AddNode" to="BlockChain" method="AddNodeToSystem"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Transaction" to="BlockChain" method="StartTransaction"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Validation" to="BlockChain" method="StartValidation"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/CheckEquality" to="BlockChain" method="CheckEquality"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/ResetState" to="BlockChain" method="PrepareChainForNextStep"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer2/ShowWallets" to="BlockChain" method="ShowWallets"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer2/ShowLikelihoods" to="BlockChain" method="ShowPower"]

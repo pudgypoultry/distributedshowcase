@@ -8,6 +8,7 @@ class_name BlockChain
 @export var spawnDistanceMultiplier = 115
 @export var simulationDelay : float = 0.01
 @export var initialAmount : int = 4
+@export var simulationStepTime : float = 1.0
 var theBlockChain : Array = []
 var currentSpawnPosition : Vector2 = Vector2(0, 0)
 var spawnDifference : float = 0.01
@@ -80,13 +81,14 @@ func AddNodeToSystem():
 	add_child(newNode)
 	newNode.parentChain = self
 	newNode.simulationDelay = simulationDelay
-	nodeList.append(newNode)
-	newNode.position = spawnDistanceMultiplier * currentSpawnPosition
-	currentSpawnPosition = NumberSpiral(currentSpawnPosition.x, currentSpawnPosition.y)
 	newNode.nodeID = totalNodes + 1
 	newNode.nodeName = "Node" + str(newNode.nodeID)
 	newNode.currentWallet = randf_range(0, 10)
 	newNode.currentBlockChain = theBlockChain
+	NodeInstantiationBehavior(newNode)
+	newNode.position = spawnDistanceMultiplier * currentSpawnPosition
+	currentSpawnPosition = NumberSpiral(currentSpawnPosition.x, currentSpawnPosition.y)
+	nodeList.append(newNode)
 	if totalNodes > 0:
 		for i in range(randi_range(1, sqrtOfTotal)):
 			var neighborIndex = randi_range(0, totalNodes - i - 1)
@@ -142,24 +144,57 @@ func CheckEquality():
 			failure = i
 			break
 	if isCorrect:
-		print(first.currentBlockChain)
+		first.PrintFullBlockChain()
 	else:
 		print("First node was not the same as node: " + str(failure))
 
+
+func RunSimulation():
+	simulating = true
+	while(simulating):
+		for i in range(randi_range(1,ceili(sqrt(len(nodeList))))):
+			StartTransaction()
+			await get_tree().create_timer(simulationStepTime).timeout
+		StartValidation()
+		await get_tree().create_timer(simulationStepTime).timeout
+		IdiosynchraticNodeDecisions()
+		PrepareChainForNextStep()
+		await get_tree().create_timer(simulationStepTime).timeout
+
+
+func PauseSimulation():
+	simulating = false
+
+
+func ShowWallets():
+	for node in nodeList:
+		node.ManageLabelState(BasicNode.LabelState.WALLET)
+
+
+func ShowPower():
+	for node in nodeList:
+		node.ManageLabelState(BasicNode.LabelState.POWERRANKING)
+
+
+"""================================
+Specific Concensus Inheritance
+================================"""
 
 func UniqueValidatorBehavior(validator : BasicNode):
 	pass
 
 
-func RunSimulation():
-	while(simulating):
-		for i in range(randi_range(1,ceili(sqrt(len(nodeList))))):
-			StartTransaction()
-			await get_tree().create_timer(1).timeout
-		StartValidation()
-		await get_tree().create_timer(1).timeout
-		PrepareChainForNextStep()
-		await get_tree().create_timer(0.3).timeout
+func NodeInstantiationBehavior(newNode : BasicNode):
+	newNode.likelihoodOfBuyingGPU = randf_range(0.1, 0.9)
+	newNode.minimumHoldingAmount = randi_range(1, 20)
+	newNode.likelihoodOfAddingFunds = randf_range(0.01, 0.1)
+	newNode.howRichIsThisGuy = randf_range(0.1, 1.5)
+
+
+func IdiosynchraticNodeDecisions():
+	for node in nodeList:
+		if randf() < node.likelihoodOfAddingFunds:
+			node.currentWallet += node.howRichIsThisGuy
 
 
 # Simple simulation is uniform random selection from list of nodes that aren't transacting

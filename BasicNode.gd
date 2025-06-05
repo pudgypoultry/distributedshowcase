@@ -6,9 +6,15 @@ class_name BasicNode
 @export var sprite : Sprite2D
 @export var neighbors : Array[BasicNode]
 @export var nodeLabel : Label
+@export var powerLabel : Label
 @export var currentHops : int
+@export var likelihoodOfBuyingGPU : float = 0.5
+@export var minimumHoldingAmount : float = 10.0
+@export var likelihoodOfAddingFunds : float = 0.01
+@export var howRichIsThisGuy : float = 1.0
 var simulationDelay : float
 enum NodeState {IDLE, SPREADINGTRANSACTION, TRANSACTING, VALIDATING, ADDINGTOCHAIN}
+enum LabelState {WALLET, POWERRANKING}
 var parentChain : BlockChain
 var currentState = NodeState.IDLE
 var nodeName : String = "Basic"
@@ -22,6 +28,7 @@ var hasValidated = false
 var isValidator = false
 var powerRanking = 1
 var showLabel = true
+var nodeDebugLog = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -30,8 +37,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if showLabel:
-		nodeLabel.text = "Name: " + nodeName + "\nWallet: " + str(snappedf(currentWallet, 0.01))
+	nodeLabel.text = "Name: " + nodeName + "\nWallet: " + str(snappedf(currentWallet, 0.01))
+	powerLabel.text = str(powerRanking)
+
 
 """================================
 Debug, Setup, and Utility
@@ -62,6 +70,14 @@ func ConnectToNeighbors(lineColor : Color):
 		parentChain.lineList.append(line)
 		neighbor.lines.append(line)
 
+
+func PrintFullBlockChain():
+	for line in currentBlockChain:
+		print(line)
+		print("	|")
+		print("	|")
+		print("	|")
+	print("Waiting for next block - [ ]")
 
 """================================
 Self-Action Management
@@ -169,3 +185,13 @@ func ManageState(newState : NodeState):
 			hasValidated = true
 			sprite.texture = spriteList[3]
 			currentState = NodeState.ADDINGTOCHAIN
+
+
+func ManageLabelState(newState : LabelState):
+	match newState:
+		LabelState.WALLET:
+			nodeLabel.visible = true
+			powerLabel.visible = false
+		LabelState.POWERRANKING:
+			nodeLabel.visible = false
+			powerLabel.visible = true
