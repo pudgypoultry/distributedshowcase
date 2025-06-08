@@ -24,7 +24,7 @@ func ChooseValidator():
 	return validator
 
 
-func IdiosynchraticNodeDecisions():
+func IdiosyncraticNodeDecisions():
 	for node in nodeList:
 		if randf() < node.likelihoodOfBuyingGPU && node.currentWallet > GPUCost && node.currentWallet > node.minimumHoldingAmount:
 			node.powerRanking += 1

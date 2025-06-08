@@ -157,7 +157,7 @@ func RunSimulation():
 			await get_tree().create_timer(simulationStepTime).timeout
 		StartValidation()
 		await get_tree().create_timer(simulationStepTime).timeout
-		IdiosynchraticNodeDecisions()
+		IdiosyncraticNodeDecisions()
 		PrepareChainForNextStep()
 		await get_tree().create_timer(simulationStepTime).timeout
 
@@ -191,7 +191,7 @@ func NodeInstantiationBehavior(newNode : BasicNode):
 	newNode.howRichIsThisGuy = randf_range(0.1, 1.5)
 
 
-func IdiosynchraticNodeDecisions():
+func IdiosyncraticNodeDecisions():
 	for node in nodeList:
 		if randf() < node.likelihoodOfAddingFunds:
 			node.currentWallet += node.howRichIsThisGuy
