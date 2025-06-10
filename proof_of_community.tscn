@@ -1,21 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://dskoa3moc0q3p"]
+[gd_scene load_steps=3 format=3 uid="uid://di8l1n5v4k45w"]
 
-[ext_resource type="PackedScene" uid="uid://cybckxd78by76" path="res://block_chain.tscn" id="1_hy1sr"]
-[ext_resource type="Script" path="res://ProofOfStake.gd" id="2_kolrd"]
-[ext_resource type="Script" path="res://cam.gd" id="3_11ifa"]
+[ext_resource type="PackedScene" uid="uid://cybckxd78by76" path="res://block_chain.tscn" id="1_yj1vu"]
+[ext_resource type="Script" path="res://cam.gd" id="2_qx0lq"]
 
-[node name="MainScene" type="Node2D"]
+[node name="MainScene2" type="Node2D"]
 
-[node name="BlockChain" parent="." instance=ExtResource("1_hy1sr")]
+[node name="BlockChain" parent="." instance=ExtResource("1_yj1vu")]
 position = Vector2(592, 334)
-script = ExtResource("2_kolrd")
-rewardAmount = 10.0
-GPUCost = 1.0
-initialAmount = 50
+initialAmount = 200
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(577, 324)
-script = ExtResource("3_11ifa")
+script = ExtResource("2_qx0lq")
+zoom_speed = 0.01
 min_zoom = 0.1
 max_zoom = 5.0
 
@@ -27,8 +24,8 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -141.0
-offset_top = -171.0
+offset_left = -40.0
+offset_top = -40.0
 grow_horizontal = 0
 grow_vertical = 0
 
@@ -58,7 +55,7 @@ text = "Check Equality"
 
 [node name="ResetState" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
-text = "Reset State"
+text = "Reset Visual"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer"]
 anchors_preset = 1
