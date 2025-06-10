@@ -76,12 +76,17 @@ func ConnectToNeighbors(lineColor : Color):
 
 
 func PrintFullBlockChain():
+	var returnStr = ""
 	for line in currentBlockChain:
-		print(line)
-		print("	|")
-		print("	|")
-		print("	|")
-	print("Waiting for next block - [ ]")
+		returnStr += str(line)
+		returnStr += "\n	|\n	|\n	|\n"
+		#print(line)
+		#print("	|")
+		#print("	|")
+		#print("	|")
+	returnStr += "Waiting for next block - [ ]"
+	return returnStr
+
 
 """================================
 Self-Action Management
@@ -89,8 +94,8 @@ Self-Action Management
 
 func StartTransaction(buyer : BasicNode, seller : BasicNode, amount : float, numHops : int):
 	ManageState(NodeState.TRANSACTING)
-	var transactionString = buyer.nodeName + ":" + str(buyer.nodeID) + " buys from "\
-		+ seller.nodeName + ":" + str(seller.nodeID) + " for a total of "\
+	var transactionString = buyer.nodeName + " buys from "\
+		+ seller.nodeName + " for a total of "\
 		+ str(amount) 
 	var hashable = [buyer, seller].hash()
 	currentBroadcasts[hashable] = transactionString

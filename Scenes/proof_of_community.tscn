@@ -1,26 +1,36 @@
-[gd_scene load_steps=4 format=3 uid="uid://d4iygh1xnvyno"]
+[gd_scene load_steps=8 format=3 uid="uid://d4iygh1xnvyno"]
 
 [ext_resource type="PackedScene" uid="uid://cybckxd78by76" path="res://Scenes/block_chain.tscn" id="1_r64pi"]
 [ext_resource type="Script" path="res://Scripts/cam.gd" id="2_7o116"]
 [ext_resource type="Script" path="res://Scripts/ProofOfCommunity.gd" id="2_i52dj"]
+[ext_resource type="Script" path="res://Scripts/SceneButton.gd" id="4_btir2"]
+
+[sub_resource type="Gradient" id="Gradient_p8124"]
+colors = PackedColorArray(0, 0, 0, 0.572549, 0, 0, 0, 0.572549)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_k1j03"]
+gradient = SubResource("Gradient_p8124")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1bx6n"]
+texture = SubResource("GradientTexture1D_k1j03")
 
 [node name="MainScene2" type="Node2D"]
 
-[node name="BlockChain" parent="." node_paths=PackedStringArray("speedEntry", "initialAmountEntry") instance=ExtResource("1_r64pi")]
+[node name="BlockChain" parent="." node_paths=PackedStringArray("holdingThresholdEntry", "FVThresholdEntry", "FImportanceEntry", "VImportanceEntry", "holdingForgivenessEntry", "FVForgivenessEntry", "FVFrontierEntry", "speedEntry", "initialAmountEntry", "rewardEntry", "printOutput") instance=ExtResource("1_r64pi")]
 position = Vector2(592, 334)
 script = ExtResource("2_i52dj")
-rewardAmount = 1.0
-holdingThreshold = 1.0
-FVThreshold = 1.0
-holdingImportance = 1.0
-FImportance = 1.0
-VImportance = 1.0
-holdingForgiveness = 5
-FVForgiveness = 5
-FVFrontier = 30
+holdingThresholdEntry = NodePath("../CanvasLayer/UniqueOptions/HoldingThresholdEntry")
+FVThresholdEntry = NodePath("../CanvasLayer/UniqueOptions/FVThresholdEntry")
+FImportanceEntry = NodePath("../CanvasLayer/UniqueOptions/FImportanceEntry")
+VImportanceEntry = NodePath("../CanvasLayer/UniqueOptions/VImportanceEntry")
+holdingForgivenessEntry = NodePath("../CanvasLayer/UniqueOptions/HoldingForgivenessEntry")
+FVForgivenessEntry = NodePath("../CanvasLayer/UniqueOptions/FVForgivenessEntry")
+FVFrontierEntry = NodePath("../CanvasLayer/UniqueOptions/FVFrontierEntry")
 initialAmount = 40
-speedEntry = NodePath("../CanvasLayer/VBoxContainer2/SpeedEntry")
-initialAmountEntry = NodePath("../CanvasLayer/VBoxContainer2/AmountEntry")
+speedEntry = NodePath("../CanvasLayer/CommonOptions/SpeedEntry")
+initialAmountEntry = NodePath("../CanvasLayer/CommonOptions/AmountEntry")
+rewardEntry = NodePath("../CanvasLayer/CommonOptions/RewardEntry")
+printOutput = NodePath("../CanvasLayer/ScrollContainer/TerminalOutput")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(577, 324)
@@ -31,7 +41,92 @@ max_zoom = 5.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer"]
+[node name="UniqueOptions" type="VBoxContainer" parent="CanvasLayer"]
+offset_right = 142.0
+offset_bottom = 304.0
+
+[node name="HoldingThreshold" type="Label" parent="CanvasLayer/UniqueOptions"]
+layout_mode = 2
+text = "Holdings Threshold"
+horizontal_alignment = 1
+
+[node name="HoldingThresholdEntry" type="LineEdit" parent="CanvasLayer/UniqueOptions"]
+layout_mode = 2
+text = "5"
+alignment = 1
+max_length = 10
+
+[node name="FVThreshold" type="Label" parent="CanvasLayer/UniqueOptions"]
+layout_mode = 2
+text = "Frequency/Volume
+Threshold"
+horizontal_alignment = 1
+
+[node name="FVThresholdEntry" type="LineEdit" parent="CanvasLayer/UniqueOptions"]
+layout_mode = 2
+text = "1"
+alignment = 1
+max_length = 10
+
+[node name="FImportance" type="Label" parent="CanvasLayer/UniqueOptions"]
+layout_mode = 2
+text = "Frequency Importance"
+horizontal_alignment = 1
+
+[node name="FImportanceEntry" type="LineEdit" parent="CanvasLayer/UniqueOptions"]
+layout_mode = 2
+text = "0.5"
+alignment = 1
+max_length = 10
+
+[node name="VImportance" type="Label" parent="CanvasLayer/UniqueOptions"]
+layout_mode = 2
+text = "Volume Importance"
+horizontal_alignment = 1
+
+[node name="VImportanceEntry" type="LineEdit" parent="CanvasLayer/UniqueOptions"]
+layout_mode = 2
+text = "0.5"
+alignment = 1
+max_length = 10
+
+[node name="HoldingForgiveness" type="Label" parent="CanvasLayer/UniqueOptions"]
+layout_mode = 2
+text = "Holding Forgiveness
+Time"
+horizontal_alignment = 1
+
+[node name="HoldingForgivenessEntry" type="LineEdit" parent="CanvasLayer/UniqueOptions"]
+layout_mode = 2
+text = "5"
+alignment = 1
+max_length = 10
+
+[node name="FVForgiveness" type="Label" parent="CanvasLayer/UniqueOptions"]
+layout_mode = 2
+text = "Frequency/Volume
+Forgiveness Time"
+horizontal_alignment = 1
+
+[node name="FVForgivenessEntry" type="LineEdit" parent="CanvasLayer/UniqueOptions"]
+layout_mode = 2
+text = "5"
+alignment = 1
+max_length = 10
+
+[node name="FVFrontier" type="Label" parent="CanvasLayer/UniqueOptions"]
+layout_mode = 2
+text = "How Far Back Do
+We Track For Trades?"
+horizontal_alignment = 1
+
+[node name="FVFrontierEntry" type="LineEdit" parent="CanvasLayer/UniqueOptions"]
+layout_mode = 2
+text = "30"
+alignment = 1
+max_length = 10
+
+[node name="CommonOptions" type="VBoxContainer" parent="CanvasLayer"]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -39,35 +134,47 @@ offset_left = -142.0
 offset_bottom = 216.0
 grow_horizontal = 0
 
-[node name="ShowWallets" type="Button" parent="CanvasLayer/VBoxContainer2"]
+[node name="ShowWallets" type="Button" parent="CanvasLayer/CommonOptions"]
 layout_mode = 2
 text = "Show Wallets"
 
-[node name="ShowLikelihoods" type="Button" parent="CanvasLayer/VBoxContainer2"]
+[node name="ShowLikelihoods" type="Button" parent="CanvasLayer/CommonOptions"]
 layout_mode = 2
 text = "Show Likelihoods"
 
-[node name="ShowCommunity" type="Button" parent="CanvasLayer/VBoxContainer2"]
+[node name="ShowCommunity" type="Button" parent="CanvasLayer/CommonOptions"]
 layout_mode = 2
 text = "Show Likelihoods"
 
-[node name="SpeedLabel" type="Label" parent="CanvasLayer/VBoxContainer2"]
+[node name="SpeedLabel" type="Label" parent="CanvasLayer/CommonOptions"]
 layout_mode = 2
 text = "Simulation Speed"
 
-[node name="SpeedEntry" type="LineEdit" parent="CanvasLayer/VBoxContainer2"]
+[node name="SpeedEntry" type="LineEdit" parent="CanvasLayer/CommonOptions"]
 layout_mode = 2
 text = "1.0"
 alignment = 1
 max_length = 10
 
-[node name="InitialAmount" type="Label" parent="CanvasLayer/VBoxContainer2"]
+[node name="InitialAmount" type="Label" parent="CanvasLayer/CommonOptions"]
 layout_mode = 2
 text = "How many 
 starting nodes?"
 horizontal_alignment = 1
 
-[node name="AmountEntry" type="LineEdit" parent="CanvasLayer/VBoxContainer2"]
+[node name="AmountEntry" type="LineEdit" parent="CanvasLayer/CommonOptions"]
+layout_mode = 2
+text = "50"
+alignment = 1
+max_length = 10
+
+[node name="RewardAmount" type="Label" parent="CanvasLayer/CommonOptions"]
+layout_mode = 2
+text = "Reward For 
+Validation"
+horizontal_alignment = 1
+
+[node name="RewardEntry" type="LineEdit" parent="CanvasLayer/CommonOptions"]
 layout_mode = 2
 text = "5"
 alignment = 1
@@ -108,17 +215,50 @@ text = "Start Validation"
 layout_mode = 2
 text = "Check Equality"
 
-[node name="ResetState" type="Button" parent="CanvasLayer/VBoxContainer"]
+[node name="ResetSimulation" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
-text = "Reset Visual"
+text = "Reset Simulation"
+script = ExtResource("4_btir2")
+nextScene = "res://Scenes/proof_of_community.tscn"
 
-[connection signal="pressed" from="CanvasLayer/VBoxContainer2/ShowWallets" to="BlockChain" method="ShowWallets"]
-[connection signal="pressed" from="CanvasLayer/VBoxContainer2/ShowLikelihoods" to="BlockChain" method="ShowPower"]
-[connection signal="pressed" from="CanvasLayer/VBoxContainer2/ShowCommunity" to="BlockChain" method="ShowCommunity"]
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer"]
+custom_minimum_size = Vector2(600, 150)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_1bx6n")
+
+[node name="TerminalOutput" type="Label" parent="CanvasLayer/ScrollContainer"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="MainMenu" type="Button" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+offset_right = 139.0
+grow_vertical = 0
+text = "Main Menu"
+script = ExtResource("4_btir2")
+nextScene = "res://Scenes/MainMenu.tscn"
+
+[connection signal="pressed" from="CanvasLayer/CommonOptions/ShowWallets" to="BlockChain" method="ShowWallets"]
+[connection signal="pressed" from="CanvasLayer/CommonOptions/ShowLikelihoods" to="BlockChain" method="ShowPower"]
+[connection signal="pressed" from="CanvasLayer/CommonOptions/ShowCommunity" to="BlockChain" method="ShowCommunity"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Start" to="BlockChain" method="RunSimulation"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Pause" to="BlockChain" method="PauseSimulation"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/AddNode" to="BlockChain" method="AddNodeToSystem"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Transaction" to="BlockChain" method="StartTransaction"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Validation" to="BlockChain" method="StartValidation"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/CheckEquality" to="BlockChain" method="CheckEquality"]
-[connection signal="pressed" from="CanvasLayer/VBoxContainer/ResetState" to="BlockChain" method="PrepareChainForNextStep"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/ResetSimulation" to="CanvasLayer/VBoxContainer/ResetSimulation" method="_on_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainMenu" to="CanvasLayer/MainMenu" method="_on_pressed"]

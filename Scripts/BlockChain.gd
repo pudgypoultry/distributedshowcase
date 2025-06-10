@@ -12,6 +12,7 @@ class_name BlockChain
 @export var speedEntry : LineEdit
 @export var initialAmountEntry : LineEdit
 @export var rewardEntry : LineEdit
+@export var printOutput : Label
 var rewardAmount : float = 1.0
 var theBlockChain : Array = []
 var currentSpawnPosition : Vector2 = Vector2(0, 0)
@@ -149,6 +150,7 @@ func CheckEquality():
 	var isCorrect = true
 	var first : BasicNode = nodeList[0]
 	var failure : int
+	var strToPrint : String
 	print("=========================================")
 	for i in range(len(nodeList)):
 		if !first.CompareChainWithOtherNode(nodeList[i]):
@@ -156,9 +158,10 @@ func CheckEquality():
 			failure = i
 			break
 	if isCorrect:
-		first.PrintFullBlockChain()
+		strToPrint = first.PrintFullBlockChain()
 	else:
-		print("First node was not the same as node: " + str(failure))
+		strToPrint = "First node was not the same as node: " + str(failure)
+	printOutput.text = strToPrint
 
 
 func RunSimulation():

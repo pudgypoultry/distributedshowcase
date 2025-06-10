@@ -1,16 +1,41 @@
 extends BlockChain
 
-@export var rewardAmount : float = 1.0
-@export var holdingThreshold : float = 1.0
-@export var FVThreshold : float = 1.0
-@export var holdingImportance : float = 1.0
-@export var FImportance : float = 1.0
-@export var VImportance : float = 1.0
-@export var holdingForgiveness : int = 5
-@export var FVForgiveness : int = 5
-@export var FVFrontier : int = 30
+@export var holdingThresholdEntry : LineEdit
+var holdingThreshold : float = 1.0
+@export var FVThresholdEntry : LineEdit
+var FVThreshold : float = 1.0
+@export var FImportanceEntry : LineEdit
+var FImportance : float = 1.0
+@export var VImportanceEntry : LineEdit
+var VImportance : float = 1.0
+@export var holdingForgivenessEntry : LineEdit
+var holdingForgiveness : int = 5
+@export var FVForgivenessEntry : LineEdit
+var FVForgiveness : int = 5
+@export var FVFrontierEntry : LineEdit
+var FVFrontier : int = 30
 var holdingThresholdDictionary = {}
 var FVThresholdDictionary = {}
+
+
+func _process(delta : float) -> void:
+	super(delta)
+	if waitingForInput && !stillRunning:
+		if holdingThresholdEntry.text.is_valid_float():
+			holdingThreshold = float(holdingThresholdEntry.text)
+		if FVThresholdEntry.text.is_valid_float():
+			FVThreshold = float(FVThresholdEntry.text)
+		if FImportanceEntry.text.is_valid_float():
+			FImportance = float(FImportanceEntry.text)
+		if VImportanceEntry.text.is_valid_float():
+			VImportance = float(VImportanceEntry.text)
+		if holdingForgivenessEntry.text.is_valid_int():
+			holdingForgiveness = int(holdingForgivenessEntry.text)
+		if FVForgivenessEntry.text.is_valid_int():
+			FVForgiveness = int(FVForgivenessEntry.text)
+		if FVFrontierEntry.text.is_valid_int():
+			FVFrontier = int(FVFrontierEntry.text)
+
 
 func IsInCommunity(nodeInQuestion : BasicNode):
 	if nodeInQuestion in holdingThresholdDictionary.keys() and nodeInQuestion in FVThresholdDictionary.keys():

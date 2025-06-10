@@ -1,18 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://bdl88oxghs2et"]
+[gd_scene load_steps=8 format=3 uid="uid://bdl88oxghs2et"]
 
 [ext_resource type="PackedScene" uid="uid://cybckxd78by76" path="res://Scenes/block_chain.tscn" id="1_hy1sr"]
 [ext_resource type="Script" path="res://Scripts/ProofOfStake.gd" id="2_kolrd"]
 [ext_resource type="Script" path="res://Scripts/cam.gd" id="3_11ifa"]
+[ext_resource type="Script" path="res://Scripts/SceneButton.gd" id="4_dilvt"]
+
+[sub_resource type="Gradient" id="Gradient_wip2l"]
+colors = PackedColorArray(0, 0, 0, 0.572549, 0, 0, 0, 0.572549)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nefle"]
+gradient = SubResource("Gradient_wip2l")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_arpki"]
+texture = SubResource("GradientTexture1D_nefle")
 
 [node name="ProofOfStake" type="Node2D"]
 
-[node name="BlockChain" parent="." node_paths=PackedStringArray("speedEntry", "initialAmountEntry") instance=ExtResource("1_hy1sr")]
+[node name="BlockChain" parent="." node_paths=PackedStringArray("speedEntry", "initialAmountEntry", "rewardEntry", "printOutput") instance=ExtResource("1_hy1sr")]
 position = Vector2(592, 334)
 script = ExtResource("2_kolrd")
-rewardAmount = 1.0
 initialAmount = 200
-speedEntry = NodePath("../CanvasLayer/VBoxContainer2/SpeedEntry")
-initialAmountEntry = NodePath("../CanvasLayer/VBoxContainer2/AmountEntry")
+speedEntry = NodePath("../CanvasLayer/CommonOptions/SpeedEntry")
+initialAmountEntry = NodePath("../CanvasLayer/CommonOptions/AmountEntry")
+rewardEntry = NodePath("../CanvasLayer/CommonOptions/RewardEntry")
+printOutput = NodePath("../CanvasLayer/ScrollContainer/TerminalOutput")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(577, 324)
@@ -22,6 +33,56 @@ min_zoom = 0.1
 max_zoom = 5.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CommonOptions" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -142.0
+offset_bottom = 216.0
+grow_horizontal = 0
+
+[node name="ShowWallets" type="Button" parent="CanvasLayer/CommonOptions"]
+layout_mode = 2
+text = "Show Wallets"
+
+[node name="ShowLikelihoods" type="Button" parent="CanvasLayer/CommonOptions"]
+layout_mode = 2
+text = "Show Likelihoods"
+
+[node name="SpeedLabel" type="Label" parent="CanvasLayer/CommonOptions"]
+layout_mode = 2
+text = "Simulation Speed"
+
+[node name="SpeedEntry" type="LineEdit" parent="CanvasLayer/CommonOptions"]
+layout_mode = 2
+text = "1.0"
+alignment = 1
+max_length = 10
+
+[node name="InitialAmount" type="Label" parent="CanvasLayer/CommonOptions"]
+layout_mode = 2
+text = "How many 
+starting nodes?"
+horizontal_alignment = 1
+
+[node name="AmountEntry" type="LineEdit" parent="CanvasLayer/CommonOptions"]
+layout_mode = 2
+text = "5"
+alignment = 1
+max_length = 10
+
+[node name="RewardAmount" type="Label" parent="CanvasLayer/CommonOptions"]
+layout_mode = 2
+text = "Reward For 
+Validation"
+horizontal_alignment = 1
+
+[node name="RewardEntry" type="LineEdit" parent="CanvasLayer/CommonOptions"]
+layout_mode = 2
+text = "1"
+alignment = 1
+max_length = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
 anchors_preset = 3
@@ -58,54 +119,49 @@ text = "Start Validation"
 layout_mode = 2
 text = "Check Equality"
 
-[node name="ResetState" type="Button" parent="CanvasLayer/VBoxContainer"]
+[node name="ResetSimulation" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
-text = "Reset Visual"
+text = "Reset Simulation"
+script = ExtResource("4_dilvt")
+nextScene = "res://Scenes/proof_of_stake.tscn"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -55.0
-offset_bottom = 66.0
-grow_horizontal = 0
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer"]
+custom_minimum_size = Vector2(600, 150)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_arpki")
 
-[node name="ShowWallets" type="Button" parent="CanvasLayer/VBoxContainer2"]
+[node name="TerminalOutput" type="Label" parent="CanvasLayer/ScrollContainer"]
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
-text = "Show Wallets"
+autowrap_mode = 3
 
-[node name="ShowLikelihoods" type="Button" parent="CanvasLayer/VBoxContainer2"]
-layout_mode = 2
-text = "Show Likelihoods"
+[node name="MainMenu" type="Button" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+offset_right = 139.0
+grow_vertical = 0
+text = "Main Menu"
+script = ExtResource("4_dilvt")
+nextScene = "res://Scenes/MainMenu.tscn"
 
-[node name="SpeedLabel" type="Label" parent="CanvasLayer/VBoxContainer2"]
-layout_mode = 2
-text = "Simulation Speed"
-
-[node name="SpeedEntry" type="LineEdit" parent="CanvasLayer/VBoxContainer2"]
-layout_mode = 2
-text = "1.0"
-alignment = 1
-max_length = 10
-
-[node name="InitialAmount" type="Label" parent="CanvasLayer/VBoxContainer2"]
-layout_mode = 2
-text = "How many 
-starting nodes?"
-horizontal_alignment = 1
-
-[node name="AmountEntry" type="LineEdit" parent="CanvasLayer/VBoxContainer2"]
-layout_mode = 2
-text = "5"
-alignment = 1
-max_length = 10
-
+[connection signal="pressed" from="CanvasLayer/CommonOptions/ShowWallets" to="BlockChain" method="ShowWallets"]
+[connection signal="pressed" from="CanvasLayer/CommonOptions/ShowLikelihoods" to="BlockChain" method="ShowPower"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Start" to="BlockChain" method="RunSimulation"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Pause" to="BlockChain" method="PauseSimulation"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/AddNode" to="BlockChain" method="AddNodeToSystem"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Transaction" to="BlockChain" method="StartTransaction"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Validation" to="BlockChain" method="StartValidation"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/CheckEquality" to="BlockChain" method="CheckEquality"]
-[connection signal="pressed" from="CanvasLayer/VBoxContainer/ResetState" to="BlockChain" method="PrepareChainForNextStep"]
-[connection signal="pressed" from="CanvasLayer/VBoxContainer2/ShowWallets" to="BlockChain" method="ShowWallets"]
-[connection signal="pressed" from="CanvasLayer/VBoxContainer2/ShowLikelihoods" to="BlockChain" method="ShowPower"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/ResetSimulation" to="CanvasLayer/VBoxContainer/ResetSimulation" method="_on_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainMenu" to="CanvasLayer/MainMenu" method="_on_pressed"]

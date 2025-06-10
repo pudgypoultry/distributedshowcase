@@ -1,6 +1,15 @@
 extends BlockChain
 
-@export var GPUCost : float = 1.0
+@export var GPUEntry : LineEdit
+var GPUCost : float = 1.0
+
+
+func _process(delta : float) -> void:
+	super(delta)
+	if waitingForInput && !stillRunning:
+		if GPUEntry.text.is_valid_float():
+			GPUCost = float(GPUEntry.text)
+
 
 # Define reward for being the validator
 func UniqueBehavior(validator : BasicNode):
