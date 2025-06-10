@@ -1,15 +1,15 @@
 [gd_scene load_steps=6 format=3 uid="uid://b3duf73vxqtlg"]
 
-[ext_resource type="Script" path="res://BasicNode.gd" id="1_l3hmv"]
-[ext_resource type="Texture2D" uid="uid://byi6e271ehhyk" path="res://BasicNode.png" id="1_p0u8q"]
-[ext_resource type="Texture2D" uid="uid://ba61lenavbdfk" path="res://LoadingNode.png" id="3_3ryxl"]
-[ext_resource type="Texture2D" uid="uid://budjbvthwht1t" path="res://TransactingNode.png" id="3_npm03"]
-[ext_resource type="Texture2D" uid="uid://dwn87gl3tpft5" path="res://FinishedNode.png" id="4_mw6o8"]
+[ext_resource type="Script" path="res://Scripts/BasicNode.gd" id="1_4s4fi"]
+[ext_resource type="Texture2D" uid="uid://byi6e271ehhyk" path="res://Art/BasicNode.png" id="2_sy55c"]
+[ext_resource type="Texture2D" uid="uid://budjbvthwht1t" path="res://Art/TransactingNode.png" id="3_dt5ox"]
+[ext_resource type="Texture2D" uid="uid://ba61lenavbdfk" path="res://Art/LoadingNode.png" id="4_511mx"]
+[ext_resource type="Texture2D" uid="uid://dwn87gl3tpft5" path="res://Art/FinishedNode.png" id="5_p67yh"]
 
 [node name="LoneNode" type="Node2D" node_paths=PackedStringArray("sprite", "nodeLabel", "powerLabel")]
 scale = Vector2(0.529957, 0.529957)
-script = ExtResource("1_l3hmv")
-spriteList = Array[CompressedTexture2D]([ExtResource("1_p0u8q"), ExtResource("3_npm03"), ExtResource("3_3ryxl"), ExtResource("4_mw6o8")])
+script = ExtResource("1_4s4fi")
+spriteList = Array[CompressedTexture2D]([ExtResource("2_sy55c"), ExtResource("3_dt5ox"), ExtResource("4_511mx"), ExtResource("5_p67yh")])
 sprite = NodePath("Sprite2D")
 nodeLabel = NodePath("NameWallet")
 powerLabel = NodePath("PowerRanking")
@@ -17,7 +17,7 @@ currentHops = 10
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.406, 0.406)
-texture = ExtResource("1_p0u8q")
+texture = ExtResource("2_sy55c")
 
 [node name="NameWallet" type="Label" parent="."]
 custom_minimum_size = Vector2(150, 150)

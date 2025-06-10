@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ba61lenavbdfk"
-path="res://.godot/imported/LoadingNode.png-65e0fa0f98acbec29b512e132f4696d5.ctex"
+uid="uid://byi6e271ehhyk"
+path="res://.godot/imported/BasicNode.png-cf1c35c26e621d4c9b51aa78e6e94113.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://LoadingNode.png"
-dest_files=["res://.godot/imported/LoadingNode.png-65e0fa0f98acbec29b512e132f4696d5.ctex"]
+source_file="res://Art/BasicNode.png"
+dest_files=["res://.godot/imported/BasicNode.png-cf1c35c26e621d4c9b51aa78e6e94113.ctex"]
 
 [params]
 

@@ -1,17 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://di8l1n5v4k45w"]
+[gd_scene load_steps=3 format=3 uid="uid://c05l6i2y1lunn"]
 
-[ext_resource type="PackedScene" uid="uid://cybckxd78by76" path="res://block_chain.tscn" id="1_yj1vu"]
-[ext_resource type="Script" path="res://cam.gd" id="2_qx0lq"]
+[ext_resource type="PackedScene" uid="uid://cybckxd78by76" path="res://Scenes/block_chain.tscn" id="1_7qay6"]
+[ext_resource type="Script" path="res://Scripts/cam.gd" id="2_jtl8r"]
 
 [node name="MainScene2" type="Node2D"]
 
-[node name="BlockChain" parent="." instance=ExtResource("1_yj1vu")]
+[node name="BlockChain" parent="." node_paths=PackedStringArray("speedEntry", "initialAmountEntry") instance=ExtResource("1_7qay6")]
 position = Vector2(592, 334)
 initialAmount = 200
+speedEntry = NodePath("../CanvasLayer/VBoxContainer2/SpeedEntry")
+initialAmountEntry = NodePath("../CanvasLayer/VBoxContainer2/AmountEntry")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(577, 324)
-script = ExtResource("2_qx0lq")
+script = ExtResource("2_jtl8r")
 zoom_speed = 0.01
 min_zoom = 0.1
 max_zoom = 5.0
@@ -72,6 +74,28 @@ text = "Show Wallets"
 [node name="ShowLikelihoods" type="Button" parent="CanvasLayer/VBoxContainer2"]
 layout_mode = 2
 text = "Show Likelihoods"
+
+[node name="SpeedLabel" type="Label" parent="CanvasLayer/VBoxContainer2"]
+layout_mode = 2
+text = "Simulation Speed"
+
+[node name="SpeedEntry" type="LineEdit" parent="CanvasLayer/VBoxContainer2"]
+layout_mode = 2
+text = "1.0"
+alignment = 1
+max_length = 10
+
+[node name="InitialAmount" type="Label" parent="CanvasLayer/VBoxContainer2"]
+layout_mode = 2
+text = "How many 
+starting nodes?"
+horizontal_alignment = 1
+
+[node name="AmountEntry" type="LineEdit" parent="CanvasLayer/VBoxContainer2"]
+layout_mode = 2
+text = "5"
+alignment = 1
+max_length = 10
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Start" to="BlockChain" method="RunSimulation"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Pause" to="BlockChain" method="PauseSimulation"]

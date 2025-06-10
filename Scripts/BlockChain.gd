@@ -9,25 +9,33 @@ class_name BlockChain
 @export var simulationDelay : float = 0.01
 @export var initialAmount : int = 4
 @export var simulationStepTime : float = 1.0
+@export var speedEntry : LineEdit
+@export var initialAmountEntry : LineEdit
 var theBlockChain : Array = []
 var currentSpawnPosition : Vector2 = Vector2(0, 0)
 var spawnDifference : float = 0.01
 var currentTransactors : Array[BasicNode] = []
 var numHops : int = 10
 var simulating = true
+var waitingForInput = true
+var stillRunning = false
+var hasBeenStarted = false
 
 
 """================================
 Debug, Setup, and Utility
 ================================"""
 
-func _ready() -> void:
-	for i in range(initialAmount):
-		AddNodeToSystem()
-		await get_tree().create_timer(spawnDifference).timeout
-	numHops = 10 + floori(sqrt(len(nodeList)))
-	await get_tree().create_timer(1).timeout
-	RunSimulation()
+#func _ready() -> void:
+	#RunSimulation()
+
+
+func _process(delta : float) -> void:
+	if waitingForInput:
+		if speedEntry.text.is_valid_float():
+			simulationStepTime = float(speedEntry.text)
+		if initialAmountEntry.text.is_valid_int():
+			initialAmount = int(initialAmountEntry.text)
 
 func NumberSpiral(x, y):
 	#print("Input: ", "(", str(x), ",", str(y), ")")
@@ -150,7 +158,18 @@ func CheckEquality():
 
 
 func RunSimulation():
+	waitingForInput = false
 	simulating = true
+	stillRunning = true
+	
+	if !hasBeenStarted:
+		for i in range(initialAmount):
+			AddNodeToSystem()
+			await get_tree().create_timer(spawnDifference).timeout
+		numHops = 10 + floori(sqrt(len(nodeList)))
+		await get_tree().create_timer(1).timeout
+		hasBeenStarted = true
+		
 	while(simulating):
 		for i in range(randi_range(1,ceili(sqrt(len(nodeList))))):
 			StartTransaction()
@@ -160,10 +179,14 @@ func RunSimulation():
 		IdiosyncraticNodeDecisions()
 		PrepareChainForNextStep()
 		await get_tree().create_timer(simulationStepTime).timeout
+	stillRunning = false
 
 
 func PauseSimulation():
 	simulating = false
+	while(stillRunning):
+		waitingForInput = false
+	waitingForInput = true
 
 
 func ShowWallets():

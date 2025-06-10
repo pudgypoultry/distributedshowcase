@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://byi6e271ehhyk"
-path="res://.godot/imported/BasicNode.png-a5b78d08d782fd2e59ea0b8b6c0b2dd0.ctex"
+uid="uid://dwn87gl3tpft5"
+path="res://.godot/imported/FinishedNode.png-17fe5ca1ed2f7053cc07a268c2a10110.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://BasicNode.png"
-dest_files=["res://.godot/imported/BasicNode.png-a5b78d08d782fd2e59ea0b8b6c0b2dd0.ctex"]
+source_file="res://Art/FinishedNode.png"
+dest_files=["res://.godot/imported/FinishedNode.png-17fe5ca1ed2f7053cc07a268c2a10110.ctex"]
 
 [params]
 
