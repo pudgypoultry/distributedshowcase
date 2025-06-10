@@ -7,14 +7,16 @@ class_name BasicNode
 @export var neighbors : Array[BasicNode]
 @export var nodeLabel : Label
 @export var powerLabel : Label
+@export var communityLabel : Label
 @export var currentHops : int
 @export var likelihoodOfBuyingGPU : float = 0.5
+@export var likelihoodOfSpendingFromOutside : float = 0.01
 @export var minimumHoldingAmount : float = 10.0
 @export var likelihoodOfAddingFunds : float = 0.01
 @export var howRichIsThisGuy : float = 1.0
 var simulationDelay : float
 enum NodeState {IDLE, SPREADINGTRANSACTION, TRANSACTING, VALIDATING, ADDINGTOCHAIN}
-enum LabelState {WALLET, POWERRANKING}
+enum LabelState {WALLET, POWERRANKING, COMMUNITY}
 var parentChain : BlockChain
 var currentState = NodeState.IDLE
 var nodeName : String = "Basic"
@@ -29,6 +31,8 @@ var isValidator = false
 var powerRanking = 1
 var showLabel = true
 var nodeDebugLog = []
+var lastHundredDays = []
+var updatedToday = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -91,6 +95,11 @@ func StartTransaction(buyer : BasicNode, seller : BasicNode, amount : float, num
 	var hashable = [buyer, seller].hash()
 	currentBroadcasts[hashable] = transactionString
 	BroadcastTransaction(hashable, buyer, seller, transactionString, numHops)
+	if !updatedToday:
+		lastHundredDays.append(Vector2(0,0))
+		updatedToday = true
+	lastHundredDays[-1].x += 1
+	lastHundredDays[-1].y += amount
 
 
 func CreateNewBlock():
@@ -170,6 +179,10 @@ func ManageState(newState : NodeState):
 			ChangeLines(originalLineColor)
 			hasValidated = false
 			isValidator = false
+			if !updatedToday:
+				lastHundredDays.append(Vector2(0,0))
+				if len(lastHundredDays) > 100:
+					lastHundredDays.remove_at(0)
 			sprite.texture = spriteList[0]
 			currentState = NodeState.IDLE
 		NodeState.SPREADINGTRANSACTION:
@@ -192,6 +205,12 @@ func ManageLabelState(newState : LabelState):
 		LabelState.WALLET:
 			nodeLabel.visible = true
 			powerLabel.visible = false
+			communityLabel.visible = false
 		LabelState.POWERRANKING:
 			nodeLabel.visible = false
 			powerLabel.visible = true
+			communityLabel.visible = false
+		LabelState.COMMUNITY:
+			nodeLabel.visible = false
+			powerLabel.visible = false
+			communityLabel.visible = true

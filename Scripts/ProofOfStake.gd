@@ -1,7 +1,5 @@
 extends BlockChain
 
-@export var rewardAmount : float = 1.0
-@export var GPUCost : float = 1.0
 
 # Define reward for being the validator
 func UniqueValidatorBehavior(validator : BasicNode):
@@ -29,5 +27,5 @@ func ChooseValidator():
 	return validator
 
 
-func IdiosynchraticNodeDecisions():
+func IdiosyncraticNodeDecisions():
 	pass

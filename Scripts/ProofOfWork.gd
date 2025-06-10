@@ -1,6 +1,5 @@
 extends BlockChain
 
-@export var rewardAmount : float = 1.0
 @export var GPUCost : float = 1.0
 
 # Define reward for being the validator
@@ -26,8 +25,15 @@ func ChooseValidator():
 
 func IdiosyncraticNodeDecisions():
 	for node in nodeList:
+		# Small likelihood to reinvest winnings
 		if randf() < node.likelihoodOfBuyingGPU && node.currentWallet > GPUCost && node.currentWallet > node.minimumHoldingAmount:
 			node.powerRanking += 1
 			node.currentWallet -= GPUCost
 			print(node.nodeName + " bought a new GPU!")
+			print("	" + node.nodeName + " has likelihood of: " + str(node.powerRanking))
+		# More likely to buy a gpu the more they have to keep ensuring lead and because they're making more from controlling the chain
+		if randf() < node.likelihoodOfSpendingFromOutside + (node.powerRanking * 0.01):
+			node.powerRanking += 1
+			node.currentWallet -= GPUCost
+			print(node.nodeName + " bought a new GPU with their own outside funds!")
 			print("	" + node.nodeName + " has likelihood of: " + str(node.powerRanking))

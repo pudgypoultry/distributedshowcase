@@ -11,6 +11,8 @@ class_name BlockChain
 @export var simulationStepTime : float = 1.0
 @export var speedEntry : LineEdit
 @export var initialAmountEntry : LineEdit
+@export var rewardEntry : LineEdit
+var rewardAmount : float = 1.0
 var theBlockChain : Array = []
 var currentSpawnPosition : Vector2 = Vector2(0, 0)
 var spawnDifference : float = 0.01
@@ -31,15 +33,17 @@ Debug, Setup, and Utility
 
 
 func _process(delta : float) -> void:
-	if waitingForInput:
+	if waitingForInput && !stillRunning:
 		if speedEntry.text.is_valid_float():
 			simulationStepTime = float(speedEntry.text)
 		if initialAmountEntry.text.is_valid_int():
 			initialAmount = int(initialAmountEntry.text)
+		if rewardEntry.text.is_valid_float():
+			rewardAmount = float(rewardEntry.text)
 
 func NumberSpiral(x, y):
 	#print("Input: ", "(", str(x), ",", str(y), ")")
-	var n = len(nodeList) + 1
+	var n = len(nodeList) + 2
 	var k = ceil(((sqrt(n) - 1.0) / 2.0))
 	var t = 2 * k + 1
 	var m = pow(t, 2)
@@ -184,8 +188,6 @@ func RunSimulation():
 
 func PauseSimulation():
 	simulating = false
-	while(stillRunning):
-		waitingForInput = false
 	waitingForInput = true
 
 

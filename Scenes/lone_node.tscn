@@ -6,13 +6,14 @@
 [ext_resource type="Texture2D" uid="uid://ba61lenavbdfk" path="res://Art/LoadingNode.png" id="4_511mx"]
 [ext_resource type="Texture2D" uid="uid://dwn87gl3tpft5" path="res://Art/FinishedNode.png" id="5_p67yh"]
 
-[node name="LoneNode" type="Node2D" node_paths=PackedStringArray("sprite", "nodeLabel", "powerLabel")]
+[node name="LoneNode" type="Node2D" node_paths=PackedStringArray("sprite", "nodeLabel", "powerLabel", "communityLabel")]
 scale = Vector2(0.529957, 0.529957)
 script = ExtResource("1_4s4fi")
 spriteList = Array[CompressedTexture2D]([ExtResource("2_sy55c"), ExtResource("3_dt5ox"), ExtResource("4_511mx"), ExtResource("5_p67yh")])
 sprite = NodePath("Sprite2D")
 nodeLabel = NodePath("NameWallet")
 powerLabel = NodePath("PowerRanking")
+communityLabel = NodePath("IsInCommunity")
 currentHops = 10
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -56,5 +57,26 @@ grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 theme_override_font_sizes/font_size = 75
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IsInCommunity" type="Label" parent="."]
+visible = false
+custom_minimum_size = Vector2(150, 150)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -75.0
+offset_right = 75.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 75
+text = "No"
 horizontal_alignment = 1
 vertical_alignment = 1
